@@ -18,8 +18,22 @@ COPY nagios3.conf /etc/apache2/conf.d/
 #configure nagios.cfg
 COPY nagios.cfg /etc/nagios3/
 
+#configure nagios password default
+# htpasswd -c -b  /etc/nagios/htpasswd.users nagiosadmin admin
+COPY htpasswd.users /etc/nagios3/
+
+#configure ports.conf
+COPY ports.conf /etc/apache2/
+
+
+# add apache2 service to supervisor
+#COPY apache2.conf /etc/supervisor/conf.d/
+
 
 # startup
-CMD nagios3 -d
+ADD start.sh /start.sh
+RUN chmod 0755 /start.sh
+CMD ["bash", "start.sh"]
+#CMD ["/usr/sbin/nagios3", "-d" , "/etc/nagios3/nagios.cfg"]
 
 EXPOSE 8080/tcp
