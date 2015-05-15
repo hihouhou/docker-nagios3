@@ -26,14 +26,9 @@ COPY htpasswd.users /etc/nagios3/
 COPY ports.conf /etc/apache2/
 
 
-# add apache2 service to supervisor
-#COPY apache2.conf /etc/supervisor/conf.d/
-
-
 # startup
 ADD start.sh /start.sh
 RUN chmod 0755 /start.sh
 CMD ["bash", "start.sh"]
-#CMD ["/usr/sbin/nagios3", "-d" , "/etc/nagios3/nagios.cfg"]
 
 EXPOSE 8080/tcp
